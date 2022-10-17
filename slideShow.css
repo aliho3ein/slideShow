@@ -11,9 +11,9 @@
   margin: 100px auto 10px;
   border-bottom: var(--LineUnderSlide-size) solid var(--LineUnderSlider-color);
   box-shadow: 0 0 15px var(--LineUnderSlider-color);
+  background-color: black;
 }
 .slidShow {
-  background-color: black;
   height: 100%;
   display: flex;
   transition: 400ms cubic-bezier(1, 0.13, 0, 1.32);
