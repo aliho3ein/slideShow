@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  background-image: linear-gradient(
+    to right bottom,
+    #0984e3,
+    #7278e0,
+    #a868d1,
+    #cf54b6,
+    #e84393
+  );
+  height: 100vh;
+}
+
+.Nr-1 {
+  background: url(image/1.jpg);
+}
+
+.Nr-2 {
+  background: url(image/2.jpg);
+}
+
+.Nr-3 {
+  background: url(image/3.jpg);
+}
+
+.Nr-4 {
+  background: url(image/4.jpg);
+}
