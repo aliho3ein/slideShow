@@ -13,16 +13,20 @@ class slideShow {
 
   /* Check Input Item */
   initialStuff() {
-    let { placeHolder, slider, currentSlider, auto } = this.op;
+    let { placeHolder, slider, currentSlider, auto, picName } = this.op;
 
-    if (!placeHolder) throw console.warn("Please Select a Slid Base");
-    if (!slider) throw console.warn("Pls Select a Slide Show");
+    if (!placeHolder)
+      throw console.warn("Please Select a Slid Base to ur Js class");
+    if (!slider) throw console.warn("Pls Select a Slide Show to ur Js class");
+    if (!picName) throw console.warn("Enter Ur pic class Name To ur Js class");
     /* if (Number.isInteger(auto)) auto = auto  else auto = false*/
     Number.isInteger(auto) && auto > 0
       ? (this.op.auto = auto * 1000)
       : (this.op.auto = false);
 
-    this.pic = [...slider.children].filter((e) => e.classList.contains("slid"));
+    this.pic = [...slider.children].filter((e) =>
+      e.classList.contains(picName)
+    );
 
     /* Message */
     console.log(
@@ -59,10 +63,10 @@ class slideShow {
     );
 
     document
-      .querySelector(".next")
+      .querySelector(`.${this.op.placeHolder.getAttribute("class")} .next`)
       .addEventListener("click", () => this.nCounter(++this.slideNr));
     document
-      .querySelector(".prev")
+      .querySelector(`.${this.op.placeHolder.getAttribute("class")} .prev`)
       .addEventListener("click", () => this.nCounter(--this.slideNr));
   }
 
@@ -71,8 +75,12 @@ class slideShow {
     let { placeHolder: place, slider } = this.op;
     /*[...slider.children].map()*/
     let dot = this.pic.map(
-      (item, index) => `<span class='dot' data-select='${index + 1}'></span>`
+      (item, index) =>
+        `<span class='dot${this.op.slideShowNr}' data-select='${
+          index + 1
+        }'></span>`
     );
+    /* Create Dot with spacial Class */
 
     let dotHolder = document.createElement("div");
     dotHolder.classList.add("dotHolder");
@@ -80,9 +88,12 @@ class slideShow {
 
     place.after(dotHolder);
 
-    let dots = document.querySelectorAll(".dot");
+    let dots = document.querySelectorAll(`.dot${this.op.slideShowNr}`);
 
-    document.querySelector(`.dot[data-select="1"]`).classList.add("active");
+    /* Add Class Active to first Dot */
+    document
+      .querySelector(`.dot${this.op.slideShowNr}[data-select="1"]`)
+      .classList.add("active");
 
     /* add Click Event on Dots */
     dots.forEach((element) => {
@@ -96,22 +107,29 @@ class slideShow {
   /*  */
   nCounter = (n) => {
     this.slideNr = parseInt(n);
-    // console.log(this.slideNr);
     this.stopInterval();
     this.show(this.slideNr);
   };
 
   /* Manual SlideShow */
   show(num) {
+    /* Check the number of Pic */
     if (num > this.pic.length) this.slideNr = 1;
     else if (num < 1) this.slideNr = this.pic.length;
+
     let x = parseInt(this.width) * (this.slideNr - 1);
 
-    document.querySelector(".dot.active").classList.remove("active");
+    /* add Class Active to dot */
     document
-      .querySelector(`.dot[data-select="${this.slideNr}"]`)
+      .querySelector(`.dot${this.op.slideShowNr}.active`)
+      .classList.remove("active");
+    document
+      .querySelector(
+        `.dot${this.op.slideShowNr}[data-select="${this.slideNr}"]`
+      )
       .classList.add("active");
 
+    /* Move the Pics */
     this.op.slider.style.marginLeft = -x + "px";
   }
 
@@ -125,9 +143,10 @@ class slideShow {
     );
   }
 
-  /*  */
+  /* reset auto slider Timer*/
   stopInterval() {
     clearInterval(this.intervalId);
+    /* and start again */
     this.automatic();
   }
 
@@ -149,7 +168,9 @@ new slideShow({
   placeHolder: document.querySelector(".slideBase"),
   slider: document.querySelector(".slidShow"),
   pic: document.querySelectorAll(".slid"),
+  picName: "slid",
   auto: parseInt(
     document.querySelector(".slideBase").getAttribute("data-auto")
   ), //Timer
+  slideShowNr: 1, //Slider Number
 });

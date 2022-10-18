@@ -5,26 +5,13 @@
   --dot-color-active: #000;
 }
 
-.slideBase {
-  height: 500px;
-  width: 900px;
-  margin: 100px auto 10px;
-  border-bottom: var(--LineUnderSlide-size) solid var(--LineUnderSlider-color);
-  box-shadow: 0 0 15px var(--LineUnderSlider-color);
-  background: black;
-}
-.slidShow {
-  height: 100%;
-  display: flex;
-  transition: 400ms cubic-bezier(1, 0.13, 0, 1.32);
-}
-
 .slidShow div[class*="Nr"] {
   background-size: cover;
   background-position: center;
 }
 
-.slideBase span {
+span[class="next"],
+span[class="prev"] {
   position: absolute;
   top: 46%;
   background: rgba(0, 0, 0, 0.6);
@@ -42,14 +29,7 @@ span[class="next"] {
   border-radius: 5px 0 0 5px;
 }
 
-.slideBase span:hover {
-  padding: 2% 20px;
-}
-
-.slideBase:hover span {
-  opacity: 1;
-}
-
+/* Dots */
 .dotHolder {
   height: 15px;
   width: 100%;
@@ -70,4 +50,27 @@ span[class="next"] {
 
 .dotHolder span.active {
   background: var(--dot-color-active);
+}
+
+/* ================================== Change it For new Class Name */
+.slideBase {
+  height: 500px;
+  width: 900px;
+  margin: 100px auto 10px;
+  border-bottom: var(--LineUnderSlide-size) solid var(--LineUnderSlider-color);
+  box-shadow: 0 0 15px var(--LineUnderSlider-color);
+  background: black;
+}
+.slidShow {
+  height: 100%;
+  display: flex;
+  transition: 400ms cubic-bezier(1, 0.13, 0, 1.32);
+}
+
+.slideBase span:hover {
+  padding: 2% 20px;
+}
+
+.slideBase:hover span {
+  opacity: 1;
 }

@@ -40,9 +40,11 @@ new slideShow({
   placeHolder: document.querySelector(".slideBase"),
   slider: document.querySelector(".slidShow"),
   pic: document.querySelectorAll(".slid"),
+  picName: "slid",
   auto: parseInt(
     document.querySelector(".slideBase").getAttribute("data-auto")
   ), //Timer
+  slideShowNr: 1, //Slider Number
 });
 ```
 
@@ -51,3 +53,4 @@ and change name of
 - slideBase to ur base Div
 - slidShow to ur Div with all pics inside
 - slid to pic class
+- and change the number to another number
