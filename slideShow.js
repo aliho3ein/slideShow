@@ -2,7 +2,7 @@ class slideShow {
   slideNr = 1;
   constructor(option) {
     this.op = option;
-    this.initialStuff(option);
+    this.initialStuff();
     this.createNexAndPer();
     this.createDot();
     this.show(this.slideNr);
@@ -13,11 +13,24 @@ class slideShow {
 
   /* Check Input Item */
   initialStuff() {
-    let { slider, currentSlider, auto } = this.op;
+    let { placeHolder, slider, currentSlider, auto } = this.op;
+
+    if (!placeHolder) throw console.warn("Please Select a Slid Base");
     if (!slider) throw console.warn("Pls Select a Slide Show");
     /* if (Number.isInteger(auto)) auto = auto  else auto = false*/
-    Number.isInteger(auto) ? auto : (auto = false);
+    Number.isInteger(auto) && auto > 0
+      ? (this.op.auto = auto * 1000)
+      : (this.op.auto = false);
+
     this.pic = [...slider.children].filter((e) => e.classList.contains("slid"));
+
+    /* Message */
+    console.log(
+      `%c SlidShow hat ${this.pic.length} Bilder , mit ${
+        this.op.auto / 1000
+      } second Timer show`,
+      "color:lime"
+    );
   }
 
   /* Create HTML Side */
@@ -27,8 +40,10 @@ class slideShow {
     base.style.position = "relative";
     picS.style.width = this.pic.length * 100 + "%";
 
+    this.width = parseInt(getComputedStyle(base).width.replace("px", ""));
+
     pic.forEach((element) => {
-      element.style.width = `${this.op.baseWidth}px`;
+      element.style.width = `${this.width}px`;
       element.style.height = "100%";
     });
   }
@@ -74,7 +89,6 @@ class slideShow {
       /*e.target.getAttribute('data-select') Or e.target.dataset.select */
       element.addEventListener("click", (e) => {
         this.nCounter(e.target.dataset.select);
-        console.log(e.target.dataset.select);
       });
     });
   }
@@ -91,7 +105,7 @@ class slideShow {
   show(num) {
     if (num > this.pic.length) this.slideNr = 1;
     else if (num < 1) this.slideNr = this.pic.length;
-    let x = parseInt(this.op.baseWidth) * (this.slideNr - 1);
+    let x = parseInt(this.width) * (this.slideNr - 1);
 
     document.querySelector(".dot.active").classList.remove("active");
     document
@@ -101,6 +115,7 @@ class slideShow {
     this.op.slider.style.marginLeft = -x + "px";
   }
 
+  /* Automatic SlidShow */
   automatic() {
     if (!this.op.auto) return;
 
@@ -110,11 +125,13 @@ class slideShow {
     );
   }
 
+  /*  */
   stopInterval() {
     clearInterval(this.intervalId);
     this.automatic();
   }
 
+  /* MouseHover on slidShow */
   mouseEvent() {
     this.op.slider.addEventListener("mouseenter", () => {
       clearInterval(this.intervalId);
@@ -126,10 +143,13 @@ class slideShow {
   }
 }
 
+/* Enter your Data Here */
+
 new slideShow({
   placeHolder: document.querySelector(".slideBase"),
   slider: document.querySelector(".slidShow"),
   pic: document.querySelectorAll(".slid"),
-  baseWidth: 900, //Base Width
-  auto: 3000, //Timer
+  auto: parseInt(
+    document.querySelector(".slideBase").getAttribute("data-auto")
+  ), //Timer
 });
