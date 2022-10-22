@@ -3,6 +3,8 @@
   --LineUnderSlide-size: 4px;
   --dot-color: rgb(79, 75, 75, 0.5);
   --dot-color-active: #000;
+  --slidShow-height: 500px;
+  --slidShow-width: 900px;
 }
 
 .slidShow div[class*="Nr"] {
@@ -54,8 +56,8 @@ span[class="next"] {
 
 /* ================================== Change it For new Class Name */
 .slideBase {
-  height: 500px;
-  width: 900px;
+  height: var(--slidShow-height);
+  width: var(--slidShow-width);
   margin: 100px auto 10px;
   border-bottom: var(--LineUnderSlide-size) solid var(--LineUnderSlider-color);
   box-shadow: 0 0 15px var(--LineUnderSlider-color);
